@@ -1,1 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대구 사투리 AI 배움터</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .chat-container {
+            width: 100%;
+            max-width: 400px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 90vh;
+        }
+        .header {
+            background-color: #ff6b6b;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .chat-box {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .message {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        .ai-msg {
+            background-color: #e9ecef;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+        .user-msg {
+            background-color: #ff6b6b;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+        .input-area {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #eee;
+        }
+        .input-area input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+        .input-area button {
+            margin-left: 8px;
+            padding: 10px 15px;
+            background-color: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="header">대구 사투리 AI 선생님 🤖</div>
+    <div class="chat-box" id="chatBox">
+        <div class="message ai-msg">
+            안녕! 나는 대구 사투리를 알려줄 AI 친구라카이~<br>
+            표준어로 아무 말이나 적어봐라! 대구 사투리로 우째 말하는지 가르쳐주께!
+        </div>
+    </div>
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="표준어로 입력해보세요..." onkeypress="if(event.keyCode==13) sendMessage()">
+        <button onclick="sendMessage()">전송</button>
+    </div>
+</div>
+
+<script>
+    function sendMessage() {
+        const input = document.getElementById('userInput');
+        const text = input.value.trim();
+        if (!text) return;
+
+        // 사용자 메시지 표시
+        addMessage(text, 'user-msg');
+        input.value = '';
+
+        // AI 응답 (기본 샘플 응답)
+        setTimeout(() => {
+            let aiReply = getDaeguDialectReply(text);
+            addMessage(aiReply, 'ai-msg');
+        }, 500);
+    }
+
+    function addMessage(text, className) {
+        const chatBox = document.getElementById('chatBox');
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `message ${className}`;
+        msgDiv.innerHTML = text;
+        chatBox.appendChild(msgDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    // 간단한 사투리 변환 예시 로직
+    function getDaeguDialectReply(text) {
+        if (text.includes('안녕하세요') || text.includes('안녕')) {
+            return '어~ 안녕! 반갑데이. 오늘 무슨 일 있나?';
+        } else if (text.includes('밥 먹었어') || text.includes('식사')) {
+            return '‘밥 먹었어?’는 대구에서 **"밥 먹었나?"** 혹은 **"밥 뭇나?"** 라고 한데이!';
+        } else if (text.includes('진짜') || text.includes('정말')) {
+            return '‘진짜?’는 대구에서 **"억수로"** 또는 **"진짜로?"** 느낌 살려서 말하면 된데이!';
+        } else {
+            return `"${text}" 표현 말이가? 대구에서는 끝을 살짝 올려서 정감있게 말해보는 긴기라!`;
+        }
+    }
+</script>
+
+</body>
+</html>
 # daegu-dialect-ai
