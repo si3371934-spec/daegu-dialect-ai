@@ -1,0 +1,1 @@
+# daegu-dialect-ai
